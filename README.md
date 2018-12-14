@@ -9,15 +9,15 @@ Download & Setup the Project
     git clone https://github.com/gigabit-gmbh/divera-alarm.git && cd divera-alarm
     cp .ENV-example .ENV
     
-Adjust the .ENV file with your data
+Adjust the ```.ENV``` file with your data
 
 Install all requirements:
 
     sudo ./install.sh
     
 ## Step 2
-To run the script, just call ./checkmail.sh - if a unread mail is in the mailbox, 
+To run the script, just call ```./checkmail.sh``` - if a unread mail is in the mailbox, 
 it will fetch it and get the attachments. It will just continue when the PDF title matches the title
-provided in the .ENV file.
+provided in the ```.ENV``` file.
 
 You could let the Script check by cron for new mails every minute

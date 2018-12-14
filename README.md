@@ -1,4 +1,4 @@
-# Divera Alaram
+# Divera Alarm
 
 Checks an IMAP Account for new mails that contains a Fax which was sent from ILS Bamberg. 
 After that the script parses it and creates an alarm within divera with the given keyword from ILS.

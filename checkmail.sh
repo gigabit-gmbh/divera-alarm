@@ -22,15 +22,20 @@ for mail in $UNSEEN_MAILS; do
 	                keywordLine=$(cat $ocrdir/$mail.txt | grep Schlagwort)
 	                keywordLine=${keywordLine##*( )}
 	                keyword=$(echo ${keywordLine//"Schlagwort: "/} | cut -c -30)
+
+			if [ "$ALARM_DIVERA" = true ]; then
+			echo "alarm divera"
 	                curl -i -v \
 	                        -H "Accept: application/json" \
 	                        -H "Content-Type:application/json" \
 	                        -X POST --data "{\"type\": \"$keyword\"}" $apiUrl
+			fi
+
 	        fi
 	done
 done
 
 # Cleanup
-rm -r $exportdir/*
-rm -r $ocrdir/*
+rm -rf $exportdir/*
+rm -rf $ocrdir/*
 

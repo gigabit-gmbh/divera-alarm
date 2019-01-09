@@ -7,6 +7,10 @@ mv ripmime /usr/local/bin/
 cd ..
 rm -fr ripMIME
 mkdir processing processing/mails processing/mailexport processing/ocr
-apt install poppler-utils tesseract-ocr ocrmypdf tesseract-ocr-deu libnotify-bin notification-daemon cups
+apt install poppler-utils tesseract-ocr ocrmypdf tesseract-ocr-deu libnotify-bin notification-daemon cups nofiy-osd at-spi2-core libnotify-bin dbus
 usermod -a -G lpadmin pi
 
+cat <<EOT >> ~/.xsessionrc
+#!/bin/sh
+/usr/lib/notification-daemon/notification-daemon &
+EOT

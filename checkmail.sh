@@ -37,6 +37,14 @@ for mail in $UNSEEN_MAILS; do
 	                        -X POST --data "{\"type\": \"$keyword\"}" $apiUrl
 			fi
 
+			# print page
+                        if [ "$PRINT_PDF" = true ]; then
+				lp  -o fit-to-page $exportdir/$file
+			fi
+                     # show alert
+                     if [ "$SHOW_ALERT" = true ]; then
+			notify-send
+                     fi
 	        fi
 	done
 done

@@ -8,9 +8,9 @@ ocrdir=$workdir/ocr
 apiUrl="https://www.divera247.com/api/alarm?accesskey=$DIVERA_API_KEY"
 
 # Check for new mails
-UNSEEN_MAILS=$(curl "imaps://$MAIL_SERVER/$MAIL_FOLDER/" --user "$MAIL_USER:$MAIL_PASS" -X 'SEARCH UNSEEN' | grep -o "[0-9.]\+")
+UNSEEN_MAILS=$(curl -s "imaps://$MAIL_SERVER/$MAIL_FOLDER/" --user "$MAIL_USER:$MAIL_PASS" -X 'SEARCH UNSEEN' | grep -o "[0-9.]\+")
 for mail in $UNSEEN_MAILS; do
-	curl "imaps://$MAIL_SERVER/$MAIL_FOLDER;UID=$mail" --user "$MAIL_USER:$MAIL_PASS"  > $maildir/$mail.mail
+	curl -s "imaps://$MAIL_SERVER/$MAIL_FOLDER;UID=$mail" --user "$MAIL_USER:$MAIL_PASS"  > $maildir/$mail.mail
 	# export the mail / attachments into a separate dir
 	ripmime -i $maildir/$mail.mail -d $exportdir
 	# just use the pdf file(s)
@@ -55,6 +55,8 @@ for mail in $UNSEEN_MAILS; do
                     	fi
 	        fi
 	done
+        # cleanup exportdir
+        rm -r $exportdir/*
 done
 
 # Cleanup

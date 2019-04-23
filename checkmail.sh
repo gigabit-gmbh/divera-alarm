@@ -51,7 +51,7 @@ for mail in $UNSEEN_MAILS; do
                                 abschnitt=$(echo $location | sed -e 's/.*Abschnitt : \(.*\) Ort =.*/\1/')
                                 ort=$(echo $location | sed -e 's/.*Ort = \(.*\) — Objekt.*/\1/')
 
-				notify-send -u critical -i dialog-warning  -t 3600000 "Alarm" "$keywordFull\n\n$street $nr\n$ort\nAbschnitt: $abschnitt"
+				notify-send -u critical -i dialog-warning  -t 1800000 "Alarm" "$keywordFull\n\n$street $nr\n$ort\nAbschnitt: $abschnitt"
                     	fi
 	        fi
 	done

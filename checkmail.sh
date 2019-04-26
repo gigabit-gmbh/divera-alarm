@@ -44,11 +44,11 @@ for mail in $UNSEEN_MAILS; do
                 fi
                 # show alert
                 if [ "$SHOW_ALERT" = true ]; then
-                    location=$(sed '/EINSATZORT/!d;s//&\n/;s/.*\n//;:a;/EINSATZGRUND/bb;$!{n;ba};:b;s//\n&/;P;D' $ocrdir/$mail.txt  | tr -s ' ' | tr -d '\n')
-                    street=$(echo $location | sed -e 's/.*Straße = \(.*\) Haus-Nr.*/\1/')
-                    nr=$(echo $location | sed -e 's/.*Haus-Nr.: \(.*\) Abschnitt :.*/\1/')
-                    abschnitt=$(echo $location | sed -e 's/.*Abschnitt : \(.*\) Ort =.*/\1/')
-                    ort=$(echo $location | sed -e 's/.*Ort = \(.*\) — Objekt.*/\1/')
+                    location=$(sed '/EINSATZORT/!d;s//&\n/;s/.*\n//;:a;/EINSATZGRUND/bb;$!{n;ba};:b;s//\n&/;P;D' $ocrdir/$mail.txt | tr -s ' ' | tr -d '\n' | sed -e 's/—/-/g')
+                    street=$(echo $location |  grep -oP '(?<=Straße).*(?=Haus-Nr)' | tr -s ' ' | tr -d '=' )
+                    nr=$(echo $location |  grep -oP '(?<=Haus-Nr.).*(?=Abschnitt)' | tr -s ' ' | tr -d '=' | tr -d ':')
+                    abschnitt=$(echo $location | grep -oP '(?<=Abschnitt).*(?=Ort)' | tr -s ' ' | tr -d '=')
+                    ort=$(echo $location | grep -oP '(?<=Ort).*(?=Objekt )' | tr -s ' ' | tr -d '=' | tr -d ':')
 
                     notify-send -u critical -i dialog-warning  -t 1800000 "Alarm" "$keywordFull\n\n$street $nr\n$ort\nAbschnitt: $abschnitt"
                 fi

@@ -1,5 +1,6 @@
 #!/bin/bash
-source .ENV
+DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
+source "$DIR/.ENV"
 
 workdir=./processing
 maildir=$workdir/mails

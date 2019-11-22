@@ -2,7 +2,7 @@
 DIR=$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )
 source "$DIR/.ENV"
 
-workdir=./processing
+workdir="$DIR/processing"
 maildir=$workdir/mails
 exportdir=$workdir/mailexport
 ocrdir=$workdir/ocr

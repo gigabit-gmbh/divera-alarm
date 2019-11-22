@@ -21,3 +21,9 @@ it will fetch it and get the attachments. It will just continue when the PDF tit
 provided in the ```.ENV``` file.
 
 You could let the Script check by cron for new mails every minute
+
+## Kiosk Mode
+
+Disalbe screensaver in ```/etc/xdg/lxsession/LXDE-pi/autostart``` (comment out)
+
+

@@ -21,6 +21,10 @@ for mail in $UNSEEN_MAILS; do
 	        pdfTitle=$(pdfinfo $exportdir/$file | grep Title)
 	        title=${pdfTitle/#"Title: "}
 	        if [[ "$title" == *"$PDF_TITLE"* ]]; then
+                # print page
+                if [ "$PRINT_PDF" = true ]; then
+                    lp  -o fit-to-page $exportdir/$file
+                fi
                 # use higher oversample to guarantee better ocr
                 ocrmypdf --oversample 300 -l deu $exportdir/$file $ocrdir/$mail.pdf
                 # get plain text of the pdf
@@ -38,11 +42,6 @@ for mail in $UNSEEN_MAILS; do
                         -H "Content-Type:application/json" \
                         -X POST --data "{\"type\": \"$keyword\"}" $apiUrl
                 fi
-
-                # print page
-                if [ "$PRINT_PDF" = true ]; then
-                    lp  -o fit-to-page $exportdir/$file
-                fi
                 # show alert
                 if [ "$SHOW_ALERT" = true ]; then
                     location=$(sed '/EINSATZORT/!d;s//&\n/;s/.*\n//;:a;/EINSATZGRUND/bb;$!{n;ba};:b;s//\n&/;P;D' $ocrdir/$mail.txt | tr -s ' ' | tr -d '\n' | sed -e 's/—/-/g')
@@ -54,12 +53,9 @@ for mail in $UNSEEN_MAILS; do
                     notify-send -u critical -i dialog-warning  -t 1800000 "Alarm" "$keywordFull\n\n$street $nr\n$ort\nAbschnitt: $abschnitt"
                 fi
             fi
+	    rm -rf $exportdir/*
 	done
-    # cleanup exportdir
-    rm -r $exportdir/*
 done
 
 # Cleanup
-rm -rf $exportdir/*
 rm -rf $ocrdir/*
-
